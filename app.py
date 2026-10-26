@@ -151,7 +151,7 @@ with t1:
     m = res["monthly"]
     if len(m) >= 2:
         chart = alt.Chart(m).mark_line(point=True).encode(
-            x=alt.X("month:T", title=None),
+              x=alt.X("month:T", title=None, axis=alt.Axis(format="%b %Y")),
             y=alt.Y("revenue:Q", title=f"Revenue ({cur})"),
             tooltip=[alt.Tooltip("month:T", format="%b %Y"), alt.Tooltip("revenue:Q", format=",.0f"),
                      alt.Tooltip("orders:Q", format=",")])
