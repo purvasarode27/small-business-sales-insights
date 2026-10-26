@@ -3,6 +3,7 @@
 **Upload your store's sales export and get plain-English answers in seconds:** what's selling, who your best customers are, who's slipping away, and what to do next.
 
    - 🔗 **Live app:** https://sb-sales-insights.streamlit.app
+   - **Live website** https://claude.ai/artifact/7qbZEngPFEksznjY3x4cui
    - 📊 **Dashboard:** PASTE-YOUR-DASHBOARD-LINK-HERE
    - 📝 **Case study:** coming soon
 
