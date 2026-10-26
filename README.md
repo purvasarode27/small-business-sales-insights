@@ -2,9 +2,9 @@
 
 **Upload your store's sales export and get plain-English answers in seconds:** what's selling, who your best customers are, who's slipping away, and what to do next.
 
-🔗 **Live app:** _add your Streamlit link here_
-📊 **Dashboard:** _add your Data Studio link here_
-📝 **Case study:** _add your Notion link here_
+   - 🔗 **Live app:** https://sb-sales-insights.streamlit.app
+   - 📊 **Dashboard:** PASTE-YOUR-DASHBOARD-LINK-HERE
+   - 📝 **Case study:** coming soon
 
 ---
 
