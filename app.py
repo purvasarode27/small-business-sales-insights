@@ -10,6 +10,7 @@ import pandas as pd
 import streamlit as st
 
 import insights as ins
+import tracking
 
 st.set_page_config(page_title="Small Business Sales Insights", page_icon="📈", layout="wide")
 
@@ -121,6 +122,17 @@ if clean.empty:
     st.error("No usable sales rows after cleaning. Please check the column choices above.")
     st.stop()
 
+# ---------------------------------------------------------------- anonymous usage counter
+src = "sample" if source == "Try with sample data" else "own"
+if not st.session_state.get("tracked_start"):
+    st.session_state["tracked_start"] = True
+    tracking.track("start", src, report["rows_used"])
+if src == "own":
+    upload_key = f"tracked_{uploaded.name}_{uploaded.size}"
+    if not st.session_state.get(upload_key):
+        st.session_state[upload_key] = True
+        tracking.track("upload", src, report["rows_used"])
+
 removed = report["rows_in"] - report["rows_used"]
 st.caption(f"Analysed **{report['rows_used']:,}** sales rows from "
            f"{report['date_min']:%d %b %Y} to {report['date_max']:%d %b %Y}. "
@@ -151,7 +163,7 @@ with t1:
     m = res["monthly"]
     if len(m) >= 2:
         chart = alt.Chart(m).mark_line(point=True).encode(
-              x=alt.X("month:T", title=None, axis=alt.Axis(format="%b %Y")),
+            x=alt.X("month:T", title=None),
             y=alt.Y("revenue:Q", title=f"Revenue ({cur})"),
             tooltip=[alt.Tooltip("month:T", format="%b %Y"), alt.Tooltip("revenue:Q", format=",.0f"),
                      alt.Tooltip("orders:Q", format=",")])
@@ -206,4 +218,5 @@ with t3:
                     f"{money(wb['revenue'].sum(), cur)} in past sales")
         st.dataframe(wb.head(20), use_container_width=True, hide_index=True)
         st.download_button("⬇️ Download full win-back list (CSV)", wb.to_csv(index=False).encode("utf-8"),
-                           file_name="winback_list.csv", mime="text/csv")
+                           file_name="winback_list.csv", mime="text/csv",
+                           on_click=tracking.track, args=("download", src, report["rows_used"]))
